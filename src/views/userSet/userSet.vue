@@ -1,6 +1,6 @@
-<template lang="html">
+<template>
     <div class="">
-        222
+
     </div>
 </template>
 
