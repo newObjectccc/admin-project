@@ -50,7 +50,7 @@ export default {
         margin-right: 20px;
     }
     #app .sidebar-container {
-        width: 12%;
+        min-width: 15%;
         height: calc(100vh - 50px);
     }
     #app .wrap {

@@ -7,7 +7,7 @@
             </template>
             <template v-if="item.children !== []">
                 <el-menu-item-group v-for="(subItem,subIndex) in item.children" :key="'sub' + subIndex">
-                    <el-menu-item :index="subItem.path">{{item.meta.title}}</el-menu-item>
+                    <el-menu-item :index="subItem.path">{{subItem.meta.title}}</el-menu-item>
                     <subMenu :menuList="subItem.children" :isChild="true"></subMenu>
                 </el-menu-item-group>
             </template>
@@ -45,11 +45,6 @@ export default {
                 return false
             }
         }
-    },
-    created() {
-        console.log('menulist',this.menuList)
-        console.log('routes',this.$route.path)
-        console.log('path',this.menuList[0].path)
     }
 }
 </script>

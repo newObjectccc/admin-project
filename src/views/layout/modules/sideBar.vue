@@ -19,6 +19,7 @@ export default {
     methods: {
         getMenuList() {
             this.menuList = this.$router.options.routes;
+            this.menuList.shift();
         }
     }
 }
