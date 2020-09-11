@@ -7,7 +7,9 @@
     <div class="wrap">
         <sideBar class="sidebar-container" />
         <div class="main-container">
-            <breadCrumb />
+            <div class="bread">
+                <breadCrumb />
+            </div>
             <appMain />
         </div>
     </div>
@@ -48,7 +50,7 @@ export default {
         margin-right: 20px;
     }
     #app .sidebar-container {
-        width: 15%;
+        width: 12%;
         height: calc(100vh - 50px);
     }
     #app .wrap {
@@ -57,6 +59,10 @@ export default {
         flex-flow: row nowrap;
     }
     #app .main-container {
+        flex: 1;
         padding: 10px;
+    }
+    #app .bread {
+        margin-bottom: 10px;
     }
 </style>
