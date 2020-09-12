@@ -19,7 +19,9 @@ export default {
     methods: {
         getMenuList() {
             this.menuList = this.$router.options.routes;
-            this.menuList.shift();
+            if (this.menuList[0].path.indexOf('login') !== -1) {
+                this.menuList.shift();
+            }
         }
     }
 }

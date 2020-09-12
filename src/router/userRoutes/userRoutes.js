@@ -13,6 +13,12 @@ export const userRoutes = [
                 name: 'userSet',
                 component: () => import('@/views/userPages/userSet.vue'),
                 meta: { title: '用户设置', class: 'el-icon-location' }
+            },
+            {
+                path: '/userAssetsSet',
+                name: 'userAssetsSet',
+                component: () => import('@/views/userPages/userAssetsSet.vue'),
+                meta: { title: '用户资产设置', class: 'el-icon-location' }
             }
         ]
     }

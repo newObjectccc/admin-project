@@ -9,7 +9,7 @@ import axios from "axios";
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
 let config = {
-    baseURL: 'https://www.ectlife.com/user',// process.env.baseURL || process.env.apiUrl || ""
+    baseURL: 'https://www.ectlife.com/admin',// process.env.baseURL || process.env.apiUrl || ""
     timeout: 10 * 1000, // Timeout
     withCredentials: false, // Check cross-site Access-Control
 };

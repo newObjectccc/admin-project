@@ -1,34 +1,45 @@
 <template>
-    <div class="">
-        <el-table :data="tableData" style="width: 100%">
-            <el-table-column label="日期" width="180">
-                <template slot-scope="scope">
-                    <i class="el-icon-time"></i>
-                    <span style="margin-left: 10px">{{ scope.row.date }}</span>
-                </template>
-            </el-table-column>
-            <el-table-column label="姓名" width="180">
-                <template slot-scope="scope">
-                    <el-popover trigger="hover" placement="top">
-                        <p>姓名: {{ scope.row.name }}</p>
-                        <p>住址: {{ scope.row.address }}</p>
-                        <div slot="reference" class="name-wrapper">
-                            <el-tag size="medium">{{ scope.row.name }}</el-tag>
-                        </div>
-                    </el-popover>
-                </template>
-            </el-table-column>
-            <el-table-column label="操作">
-                <template slot-scope="scope">
-                    <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-                    <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
-                </template>
-            </el-table-column>
-        </el-table>
-        <div class="" @click="getPageData">
-            asdkajskl
-        </div>
+<div class="">
+    <el-table :data="tableData" style="width: 100%">
+        <el-table-column label="用户ID" width="100">
+            <template slot-scope="scope">
+                <span style="margin-left: 10px">{{ scope.row.ID }}</span>
+            </template>
+        </el-table-column>
+        <el-table-column label="用户电话" width="170">
+            <template slot-scope="scope">
+                <span style="margin-left: 10px">{{ scope.row.Phone }}</span>
+            </template>
+        </el-table-column>
+        <el-table-column label="Email" width="200">
+            <template slot-scope="scope">
+                <span style="margin-left: 10px">{{ scope.row.Email }}</span>
+            </template>
+        </el-table-column>
+        <el-table-column label="状态" width="100">
+            <template slot-scope="scope">
+                <span style="margin-left: 10px">{{ scope.row.Status }}</span>
+            </template>
+        </el-table-column>
+
+        <el-table-column label="操作">
+            <template slot-scope="scope">
+                <el-button size="mini" type="danger" @click="frozenAccount(scope.row)">冻结用户</el-button>
+            </template>
+        </el-table-column>
+    </el-table>
+    <div id="pagination" class="block">
+        <el-pagination
+            :current-page.sync="curPage"
+            @current-change="handleCurrentChange"
+            :page-size="100"
+            layout="total, prev, pager, next"
+            :total="totalRows"
+        >
+        </el-pagination>
     </div>
+
+</div>
 </template>
 
 <script>
@@ -36,23 +47,9 @@ export default {
     name: 'userSet',
     data() {
         return {
-            tableData: [{
-                date: '2016-05-02',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1518 弄'
-            }, {
-                date: '2016-05-04',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1517 弄'
-            }, {
-                date: '2016-05-01',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1519 弄'
-            }, {
-                date: '2016-05-03',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1516 弄'
-            }]
+            tableData: [],
+            curPage: 1,
+            totalRows: 20
         }
     },
     created() {
@@ -62,20 +59,52 @@ export default {
         getPageData() {
             this.$axios({
                 url: '/userpage',
-				method: 'GET',
-				header: {
-					Authorization: ''
-				}
+                method: 'GET',
+                headers: {
+                    Authorization: this.$store.state._token
+                },
+                params: {
+                    Offset: (this.curPage - 1) * 20,
+                    Limit: 20
+                }
             }).then((res) => {
                 console.log(res);
+                this.tableData = res.data.Data.Rows
+                this.totalRows = res.data.Data.Page.TotalRows
             })
         },
-        handleEdit(index, row) {
-            console.log(index, row);
+        handleCurrentChange() {
+            console.log(this.curPage);
+            this.getPageData();
         },
-        handleDelete(index, row) {
-            console.log(index, row);
+        frozenAccount(row) {
+            console.log(row);
+            let curStatus = row.Status === 1 ? 2 : 1
+            this.$axios({
+                url: '/userstatus',
+                method: 'PUT',
+                headers: {
+                    Authorization: this.$store.state._token
+                },
+                params: {
+                    Status: curStatus,
+                    UserID: row.ID
+                }
+            }).then(res => {
+                console.log(res);
+            })
         }
     }
 }
 </script>
+<style lang="css" scoped>
+    #pagination {
+        padding: 40px 20px 0 20px;
+    }
+    #dialog .margin {
+        margin-top: 5px;
+    }
+    #dialog .margin-large {
+        margin: 20px 0;
+    }
+</style>

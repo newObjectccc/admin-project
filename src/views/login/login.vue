@@ -49,18 +49,17 @@ export default {
 					Code: this.code
                 }
             }).then(res => {
-                this.$store.commit('set_token', 'xxx')
-                this.$router.push('/')
-                console.log(res)
-                // if (res.statusCode === 200) {
-                //     this.$store.commit('set_token', 'xxx')
-                //     this.$router.push('/')
-                // } else {
-                //     this.getCode()
-                // }
+                console.log(res);
+                if (res.status === 200) {
+                    console.log(111);
+                    this.$store.commit('set_token', res.data.Data.Token)
+                    this.$router.push({path: '/'})
+                } else {
+                    this.getCode()
+
+                }
             }).catch(err => {
-                this.$store.commit('set_token', 'xxx')
-                this.$router.push('/')
+                this.getCode()
                 console.log(err);
             })
         },
