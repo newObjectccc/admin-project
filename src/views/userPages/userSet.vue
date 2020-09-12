@@ -18,13 +18,14 @@
         </el-table-column>
         <el-table-column label="状态" width="100">
             <template slot-scope="scope">
-                <span style="margin-left: 10px">{{ scope.row.Status }}</span>
+                <span style="margin-left: 10px">{{ scope.row.Status === 1 ? '正常' : '已冻结' }}</span>
             </template>
         </el-table-column>
 
         <el-table-column label="操作">
             <template slot-scope="scope">
-                <el-button size="mini" type="danger" @click="frozenAccount(scope.row)">冻结用户</el-button>
+                <el-button v-if="scope.row.Status === 1" size="mini" type="danger" @click="frozenAccount(scope.row, 2)">冻结用户</el-button>
+                <el-button v-else size="mini" type="success" @click="frozenAccount(scope.row, 1)">解结用户</el-button>
             </template>
         </el-table-column>
     </el-table>
@@ -77,21 +78,24 @@ export default {
             console.log(this.curPage);
             this.getPageData();
         },
-        frozenAccount(row) {
+        frozenAccount(row, type) {
             console.log(row);
-            let curStatus = row.Status === 1 ? 2 : 1
             this.$axios({
                 url: '/userstatus',
                 method: 'PUT',
                 headers: {
-                    Authorization: this.$store.state._token
+                    'Authorization': this.$store.state._token,
+                    'Content-Type': 'application/json'
                 },
-                params: {
-                    Status: curStatus,
+                data: JSON.stringify({
+                    Status: type,
                     UserID: row.ID
-                }
+                })
             }).then(res => {
                 console.log(res);
+                if (res.status === 200) {
+                    this.getPageData()
+                }
             })
         }
     }

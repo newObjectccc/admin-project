@@ -17,7 +17,7 @@
                     <span style="margin-left: 10px">{{ scope.row.Phone }}</span>
                 </template>
             </el-table-column>
-            <el-table-column label="Email" width="200">
+            <el-table-column label="资产" width="200">
                 <template slot-scope="scope">
                     <span style="margin-left: 10px">{{ scope.row.Email }}</span>
                 </template>
