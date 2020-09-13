@@ -89,7 +89,7 @@ export default {
                 },
                 data: JSON.stringify({
                     Status: type,
-                    UserID: row.ID
+                    UserID: row.UserID
                 })
             }).then(res => {
                 console.log(res);
@@ -105,10 +105,5 @@ export default {
     #pagination {
         padding: 40px 20px 0 20px;
     }
-    #dialog .margin {
-        margin-top: 5px;
-    }
-    #dialog .margin-large {
-        margin: 20px 0;
-    }
+    
 </style>

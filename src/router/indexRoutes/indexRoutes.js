@@ -19,6 +19,12 @@ export const indexRoutes = [
                 name: 'mainSet',
                 component: () => import('@/views/indexPages/mainSet.vue'),
                 meta: { title: '参数设置', class: '' },
+            },
+            {
+                path: '/statistics',
+                name: 'statistics',
+                component: () => import('@/views/indexPages/statistics.vue'),
+                meta: { title: '数据统计', class: '' },
             }
         ]
     }
