@@ -12,7 +12,7 @@ let loadingView = null;
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
 let config = {
-    baseURL: 'http://z3vswr.natappfree.cc/admin', // 'https://www.ectlife.com/admin',// process.env.baseURL || process.env.apiUrl || ""
+    baseURL: 'https://www.ectlife.com/admin', // 'https://www.ectlife.com/admin',// process.env.baseURL || process.env.apiUrl || ""
     timeout: 10 * 1000, // Timeout
     withCredentials: false, // Check cross-site Access-Control
 };

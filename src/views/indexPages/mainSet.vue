@@ -1,41 +1,15 @@
 <template>
 <div class="">
     <div class="wrap">
-        <el-input class="margin-right" v-model="userID" placeholder="请输入用户ID"></el-input>
-        <el-button size="small" type="primary" @click="searchAssets">查询用户</el-button>
+        <div class="spans">当前兑换值：{{curExchange}}</div>
+        <el-input class="margin-right" v-model="baseExchangeValue" placeholder="设置兑换值"></el-input>
+        <el-button size="small" type="primary" @click="setExchange">设置</el-button>
     </div>
-
-    <template v-if="tableData !== []">
-            <el-table :data="tableData" style="width: 100%">
-            <el-table-column label="用户ID" width="100">
-                <template slot-scope="scope">
-                    <span style="margin-left: 10px">{{ scope.row.ID }}</span>
-                </template>
-            </el-table-column>
-            <el-table-column label="用户电话" width="170">
-                <template slot-scope="scope">
-                    <span style="margin-left: 10px">{{ scope.row.Phone }}</span>
-                </template>
-            </el-table-column>
-            <el-table-column label="资产" width="200">
-                <template slot-scope="scope">
-                    <span style="margin-left: 10px">{{ scope.row.Email }}</span>
-                </template>
-            </el-table-column>
-            <el-table-column label="状态" width="100">
-                <template slot-scope="scope">
-                    <span style="margin-left: 10px">{{ scope.row.Status }}</span>
-                </template>
-            </el-table-column>
-
-            <el-table-column label="操作">
-                <template slot-scope="scope">
-                    <el-button size="mini" type="danger" @click="frozenAssets(scope.row)">冻结资产</el-button>
-                    <el-button size="mini" type="danger" @click="handleAssets(scope.row)">修改资产</el-button>
-                </template>
-            </el-table-column>
-        </el-table>
-    </template>
+    <div class="wrap">
+        <div class="spans">当前usdt归集起始金额：{{curUSDT}}</div>
+        <el-input class="margin-right" v-model="baseUSDTValue" placeholder="设置usdt归集起始金额"></el-input>
+        <el-button size="small" type="primary" @click="setUSDT">设置</el-button>
+    </div>
 </div>
 </template>
 
@@ -43,53 +17,54 @@
 export default {
     data() {
         return {
-            userID: '',
-            tableData: []
+            baseExchangeValue: '',
+            baseUSDTValue: '',
+            curExchange: '',
+            curUSDT: ''
         }
     },
     mounted() {
-
+        this.getConfig()
     },
     methods: {
         getConfig() {
             this.$axios({
-                url: '/userassets',
+                url: '/config',
 				method: 'GET',
 				headers: {
 					Authorization: this.$store.state._token
-				},
-                params: {
-                    ID: this.userID
-                }
+				}
             }).then((res) => {
                 console.log(res);
+                if (res.status === 200) {
+                    this.curExchange = res.data.Data.ect_usdt;
+                    this.curUSDT = res.data.Data.usdt_merge_amount;
+                }
             })
         },
-        handleAssets(row) {
+        setExchange() {
             this.$axios({
                 url: '/userassetsmomeny',
                 method: 'PUT',
                 headers: {
                     Authorization: this.$store.state._token
                 },
-                params: {
-                    ID: row.ID
+                data: {
+                    Factor: parseFloat(this.baseFactorValue)
                 }
             }).then(res => {
                 console.log(res);
             })
         },
-        frozenAssets(row) {
-            let curStatus = row.Status === 1 ? 2 : 1
+        setUSDT() {
             this.$axios({
                 url: '/userassetsstatus',
                 method: 'PUT',
                 headers: {
                     Authorization: this.$store.state._token
                 },
-                params: {
-                    Status: curStatus,
-                    ID: row.ID
+                data: {
+                    Free: parseFloat(this.baseFreeValue)
                 }
             }).then(res => {
                 console.log(res);
@@ -100,22 +75,20 @@ export default {
 </script>
 
 <style lang="css" scoped>
-    .margin-large {
-        display: block;
-        margin: 20px 0;
-        font-size: 18px;
-    }
-    .margin {
-        display: block;
-        margin: 10px 0;
-    }
-    .margin span {
-        font-size: 15px;
-    }
     .wrap {
-        width: 30%;
+        width: 70%;
         display: flex;
         align-items: center;
+        margin: 20px 0;
+
+    }
+    .spans {
+        display: block;
+        width: 50%;
+        border: 1px solid #8a8a8a;
+        padding: 10px;
+        border-radius: 6px;
+        margin-right: 10px;
     }
     .margin-right {
         margin-right: 20px;

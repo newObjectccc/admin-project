@@ -166,6 +166,7 @@ export default {
             if (t === 4) {
                 this.changeAssets();
                 this.centerDialogVisible = false;
+                return false;
             }
             this.$axios({
                 url: curUrl,
