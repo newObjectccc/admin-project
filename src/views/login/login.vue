@@ -59,6 +59,7 @@ export default {
 
                 }
             }).catch(err => {
+                this.$message.error(err)
                 this.getCode()
                 console.log(err);
             })
