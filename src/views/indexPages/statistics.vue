@@ -43,6 +43,14 @@ export default {
                 },
                 series: [{
                     type: 'bar',
+                    itemStyle: {
+                        normal: {
+                            color: function(params) {
+                                var colorList = ['#cca272', '#74608f', '#d7a02b', '#c8ba23'];
+                                return colorList[params.dataIndex]
+                            }
+                        }
+                    },
                     encode: {
                         // Map the "amount" column to X axis.
                         x: 'total',
@@ -77,6 +85,14 @@ export default {
                 },
                 series: [{
                     type: 'bar',
+                    itemStyle: {
+                        normal: {
+                            color: function(params) {
+                                var colorList = ['#cca272', '#74608f', '#d7a02b', '#c8ba23'];
+                                return colorList[params.dataIndex]
+                            }
+                        }
+                    },
                     encode: {
                         // Map the "amount" column to X axis.
                         x: 'total',
