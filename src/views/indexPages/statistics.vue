@@ -27,28 +27,24 @@ export default {
                 tooltip: {},
                 dataset: {
                     source: [
-                        ['product', '2012', '2013', '2014', '2015'],
+                        ['product'],
                         ['USDT', 41.1, 30.4, 65.1, 53.3],
                         ['ECT', 86.5, 92.1, 85.7, 83.1]
                     ]
                 },
-                xAxis: [{
-                        type: 'category',
-                        gridIndex: 0
-                    },
+                xAxis: [
                     {
                         type: 'category',
-                        gridIndex: 1
-                    }
-                ],
-                yAxis: [{
                         gridIndex: 0
-                    },
-                    {
-                        gridIndex: 1
                     }
                 ],
-                grid: [{
+                yAxis: [
+                    {
+                        gridIndex: 0
+                    }
+                ],
+                grid: [
+                    {
                         bottom: '55%'
                     },
                     {
@@ -104,10 +100,9 @@ export default {
     },
     methods: {
         timeChange(e) {
-            let beginTime = e[0].getDay().getTime()
-            let overTime = e[1].getDay().getTime()
-            console.log(e[0].getDay().getTime());
-            console.log(e[1].getDay().getTime());
+            let beginTime = e[0].getTime() / 1000
+            let overTime = e[1].getTime() / 1000
+
             this.getECTData(beginTime, overTime)
             this.getUSDTData(beginTime, overTime)
         },
@@ -122,7 +117,7 @@ export default {
                 headers: {
                     Authorization: this.$store.state._token
                 },
-                data: {
+                params: {
                     BeginTime: b,
                     EndTime: o
                 }
@@ -137,7 +132,7 @@ export default {
                 headers: {
                     Authorization: this.$store.state._token
                 },
-                data: {
+                params: {
                     BeginTime: b,
                     EndTime: o
                 }

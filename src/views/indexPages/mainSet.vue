@@ -1,13 +1,13 @@
 <template>
 <div class="">
     <div class="wrap">
-        <div class="spans">当前兑换值：{{curExchange}}</div>
-        <el-input class="margin-right" v-model="baseExchangeValue" placeholder="设置兑换值"></el-input>
+        <div class="spans">当前{{curExchange.Mark}}：{{curExchange.Value}}</div>
+        <el-input class="margin-right" v-model="baseExchangeValue" :placeholder="'设置' + curExchange.Mark"></el-input>
         <el-button size="small" type="primary" @click="setExchange">设置</el-button>
     </div>
     <div class="wrap">
-        <div class="spans">当前usdt归集起始金额：{{curUSDT}}</div>
-        <el-input class="margin-right" v-model="baseUSDTValue" placeholder="设置usdt归集起始金额"></el-input>
+        <div class="spans">当前{{curUSDT.Mark}}：{{curUSDT.Value}}</div>
+        <el-input class="margin-right" v-model="baseUSDTValue" :placeholder="'设置' + curUSDT.Mark"></el-input>
         <el-button size="small" type="primary" @click="setUSDT">设置</el-button>
     </div>
 </div>
@@ -37,37 +37,53 @@ export default {
             }).then((res) => {
                 console.log(res);
                 if (res.status === 200) {
-                    this.curExchange = res.data.Data.ect_usdt;
-                    this.curUSDT = res.data.Data.usdt_merge_amount;
+                    this.curExchange = res.data.Data[0];
+                    this.curUSDT = res.data.Data[1];
                 }
             })
         },
         setExchange() {
             this.$axios({
-                url: '/userassetsmomeny',
+                url: '/config',
                 method: 'PUT',
                 headers: {
                     Authorization: this.$store.state._token
                 },
                 data: {
-                    Factor: parseFloat(this.baseFactorValue)
+                    Value: parseFloat(this.baseExchangeValue),
+                    Mark: this.curExchange.Mark,
+                    ID: this.curExchange.ID
                 }
             }).then(res => {
                 console.log(res);
+                if (res.status === 200) {
+                    this.baseExchangeValue = '';
+                    this.getConfig()
+                }
+            }).catch(err => {
+                this.$message.error(err)
             })
         },
         setUSDT() {
             this.$axios({
-                url: '/userassetsstatus',
+                url: '/config',
                 method: 'PUT',
                 headers: {
                     Authorization: this.$store.state._token
                 },
                 data: {
-                    Free: parseFloat(this.baseFreeValue)
+                    Value: parseFloat(this.baseUSDTValue),
+                    Mark: this.curUSDT.Mark,
+                    ID: this.curUSDT.ID
                 }
             }).then(res => {
                 console.log(res);
+                if (res.status === 200) {
+                    this.baseUSDTValue = '';
+                    this.getConfig()
+                }
+            }).catch(err => {
+                this.$message.error(err)
             })
         }
     }
