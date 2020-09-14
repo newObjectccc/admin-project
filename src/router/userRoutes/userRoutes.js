@@ -12,13 +12,19 @@ export const userRoutes = [
                 path: '/userSet',
                 name: 'userSet',
                 component: () => import('@/views/userPages/userSet.vue'),
-                meta: { title: '用户设置', class: 'el-icon-location' }
+                meta: { title: '用户设置', class: '' }
             },
             {
                 path: '/userAssetsSet',
                 name: 'userAssetsSet',
                 component: () => import('@/views/userPages/userAssetsSet.vue'),
-                meta: { title: '用户资产设置', class: 'el-icon-location' }
+                meta: { title: '用户资产设置', class: '' }
+            },
+            {
+                path: '/userTreeView',
+                name: 'userTreeView',
+                component: () => import('@/views/userPages/userTreeView.vue'),
+                meta: { title: '用户邀请视图', class: '' }
             }
         ]
     }
