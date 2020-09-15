@@ -6,7 +6,7 @@ export const indexRoutes = [
         name: 'layout',
         component: layout,
         redirect: '/newsSet',
-        meta: { title: '首页', class: 'el-icon-menu' },
+        meta: { title: '首选项', class: 'el-icon-menu' },
         children: [
             {
                 path: '/newsSet',
@@ -25,6 +25,12 @@ export const indexRoutes = [
                 name: 'statistics',
                 component: () => import('@/views/indexPages/statistics.vue'),
                 meta: { title: '数据统计', class: '' },
+            },
+            {
+                path: '/notionalPooling',
+                name: 'notionalPooling',
+                component: () => import('@/views/indexPages/notionalPooling.vue'),
+                meta: { title: '归集设置', class: '' },
             }
         ]
     }
