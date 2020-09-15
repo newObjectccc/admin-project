@@ -12,7 +12,7 @@ let loadingView = null;
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
 let config = {
-    baseURL: 'https://www.ectlife.com/admin', // 'https://www.ectlife.com/admin',// process.env.baseURL || process.env.apiUrl || ""
+    baseURL: 'https://www.ectlife.com/admin', // 'https://www.ectlife.com/admin', // http://192.200.1.169:8082/admin ，// process.env.baseURL || process.env.apiUrl || ""
     timeout: 10 * 1000, // Timeout
     withCredentials: false, // Check cross-site Access-Control
 };

@@ -24,8 +24,8 @@
 
         <el-table-column label="操作">
             <template slot-scope="scope">
-                <el-button v-if="scope.row.Status === 1" size="mini" type="danger" @click="frozenAccount(scope.row)">冻结用户</el-button>
-                <el-button v-else size="mini" type="success" @click="frozenAccount(scope.row)">解结用户</el-button>
+                <el-button size="mini" type="danger" @click="showDialog(scope.row)">ETH归集</el-button>
+                <!-- <el-button v-else size="mini" type="success" @click="frozenAccount(scope.row)">解结用户</el-button> -->
             </template>
         </el-table-column>
     </el-table>
@@ -40,7 +40,9 @@
         </el-pagination>
     </div>
     <el-dialog title="修改数值" :visible.sync="centerDialogVisible" width="30%" center>
-        <el-input class="margin" type="number" v-model="fixValue" placeholder="请输入"></el-input>
+        <el-input class="margin" type="number" v-model="fix1Value" placeholder="请输入"></el-input>
+        <el-input class="margin" type="number" v-model="fix2Value" placeholder="请输入"></el-input>
+        <el-input class="margin" type="number" v-model="fix3Value" placeholder="请输入"></el-input>
         <span slot="footer" class="dialog-footer">
             <el-button @click="centerDialogVisible = false">取 消</el-button>
             <el-button type="primary" @click="handleSet">确 定</el-button>
@@ -58,7 +60,9 @@ export default {
             curPage: 1,
             totalRows: 20,
             centerDialogVisible: false,
-            fixValue: '',
+            fix1Value: '',
+            fix2Value: '',
+            fix3Value: '',
             curRow: {}
         }
     },
@@ -67,11 +71,27 @@ export default {
     },
     methods: {
         handleSet() {
-
+            // this.$axios({
+            //     url: '/userstatus',
+            //     method: 'PUT',
+            //     headers: {
+            //         'Authorization': this.$store.state._token,
+            //         'Content-Type': 'application/json'
+            //     },
+            //     data: JSON.stringify({
+            //         Status: type,
+            //         UserID: row.UserID
+            //     })
+            // }).then(res => {
+            //     console.log(res);
+            //     if (res.status === 200) {
+            //         this.getPageData()
+            //     }
+            // })
         },
         getPageData() {
             this.$axios({
-                url: '/userpage',
+                url: '/userusdtfreemerge',
                 method: 'GET',
                 headers: {
                     Authorization: this.$store.state._token
@@ -90,25 +110,9 @@ export default {
             console.log(this.curPage);
             this.getPageData();
         },
-        frozenAccount(row, type) {
-            console.log(row);
-            this.$axios({
-                url: '/userstatus',
-                method: 'PUT',
-                headers: {
-                    'Authorization': this.$store.state._token,
-                    'Content-Type': 'application/json'
-                },
-                data: JSON.stringify({
-                    Status: type,
-                    UserID: row.UserID
-                })
-            }).then(res => {
-                console.log(res);
-                if (res.status === 200) {
-                    this.getPageData()
-                }
-            })
+        showDialog(row) {
+            this.curRow = row;
+            this.centerDialogVisible = true;
         }
     }
 }
