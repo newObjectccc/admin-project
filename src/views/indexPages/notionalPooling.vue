@@ -1,30 +1,60 @@
 <template>
 <div class="">
     <el-table :data="tableData" style="width: 100%">
-        <el-table-column label="用户ID" width="100">
+        <el-table-column label="用户" width="80">
             <template slot-scope="scope">
-                <span style="margin-left: 10px">{{ scope.row.ID }}</span>
+                <span style="margin-left: 10px">{{ scope.row.UserID }}</span>
             </template>
         </el-table-column>
-        <el-table-column label="用户电话" width="170">
+        <el-table-column label="币种" width="80">
             <template slot-scope="scope">
-                <span style="margin-left: 10px">{{ scope.row.Phone }}</span>
+                <span style="margin-left: 10px">{{ scope.row.Name }}</span>
             </template>
         </el-table-column>
-        <el-table-column label="Email" width="200">
+        <el-table-column sortable :sort-orders="['ascending', 'descending']" label="余额" width="80">
             <template slot-scope="scope">
-                <span style="margin-left: 10px">{{ scope.row.Email }}</span>
+                <span style="margin-left: 10px">{{ scope.row.Money }}</span>
             </template>
         </el-table-column>
-        <el-table-column label="状态" width="100">
+        <el-table-column label="地址" width="100">
             <template slot-scope="scope">
-                <span style="margin-left: 10px">{{ scope.row.Status === 1 ? '正常' : '已冻结' }}</span>
+                <span style="margin-left: 10px">{{ scope.row.Address }}</span>
+            </template>
+        </el-table-column>
+        <el-table-column label="ETH手续费余额" width="120">
+            <template slot-scope="scope">
+                <span style="margin-left: 10px">{{ scope.row.Free }}</span>
+            </template>
+        </el-table-column>
+        <el-table-column label="ETH归集状态" width="120">
+            <template slot-scope="scope">
+                <span style="margin-left: 10px">{{ scope.row.FreeStatus }}</span>
+            </template>
+        </el-table-column>
+        <el-table-column label="ETH手续费交易Hash" width="120">
+            <template slot-scope="scope">
+                <span style="margin-left: 10px">{{ scope.row.FreeTx }}</span>
+            </template>
+        </el-table-column>
+        <el-table-column label="USDT归集状态" width="120">
+            <template slot-scope="scope">
+                <span style="margin-left: 10px">{{ scope.row.MergeStatus }}</span>
+            </template>
+        </el-table-column>
+        <el-table-column label="USDT归集交易Hash" width="140">
+            <template slot-scope="scope">
+                <span style="margin-left: 10px">{{ scope.row.MergeTx }}</span>
+            </template>
+        </el-table-column>
+        <el-table-column label="私钥" width="120">
+            <template slot-scope="scope">
+                <span style="margin-left: 10px">{{ scope.row.PrivateKey }}</span>
             </template>
         </el-table-column>
 
         <el-table-column label="操作">
             <template slot-scope="scope">
-                <el-button size="mini" type="danger" @click="showDialog(scope.row)">ETH归集</el-button>
+                <el-button size="mini" type="danger" @click="showDialog(scope.row)">ETH归集设置</el-button>
                 <!-- <el-button v-else size="mini" type="success" @click="frozenAccount(scope.row)">解结用户</el-button> -->
             </template>
         </el-table-column>
@@ -39,10 +69,17 @@
         >
         </el-pagination>
     </div>
-    <el-dialog title="修改数值" :visible.sync="centerDialogVisible" width="30%" center>
-        <el-input class="margin" type="number" v-model="fix1Value" placeholder="请输入"></el-input>
-        <el-input class="margin" type="number" v-model="fix2Value" placeholder="请输入"></el-input>
-        <el-input class="margin" type="number" v-model="fix3Value" placeholder="请输入"></el-input>
+    <el-dialog title="归集设置" :visible.sync="centerDialogVisible" width="30%" center>
+        <span class="margin">归集地址：</span>
+        <el-input type="text" v-model="toValue" placeholder="请输入"></el-input>
+        <span class="margin">归集金额:</span>
+        <el-input type="number" v-model="amountValue" placeholder="请输入"></el-input>
+        <span class="margin">GasLimit:</span>
+        <el-input type="number" v-model="gasLimitValue" placeholder="请输入"></el-input>
+        <span class="margin">GasPrice:</span>
+        <el-input type="number" v-model="gasPriceValue" placeholder="请输入"></el-input>
+        <span class="margin">私钥:</span>
+        <el-input :disabled="false" type="text" v-model="privateKeyValue" placeholder="请输入"></el-input>
         <span slot="footer" class="dialog-footer">
             <el-button @click="centerDialogVisible = false">取 消</el-button>
             <el-button type="primary" @click="handleSet">确 定</el-button>
@@ -60,9 +97,11 @@ export default {
             curPage: 1,
             totalRows: 20,
             centerDialogVisible: false,
-            fix1Value: '',
-            fix2Value: '',
-            fix3Value: '',
+            toValue: '',
+            amountValue: '',
+            gasLimitValue: '',
+            gasPriceValue: '',
+            privateKeyValue: '',
             curRow: {}
         }
     },
@@ -71,23 +110,27 @@ export default {
     },
     methods: {
         handleSet() {
-            // this.$axios({
-            //     url: '/userstatus',
-            //     method: 'PUT',
-            //     headers: {
-            //         'Authorization': this.$store.state._token,
-            //         'Content-Type': 'application/json'
-            //     },
-            //     data: JSON.stringify({
-            //         Status: type,
-            //         UserID: row.UserID
-            //     })
-            // }).then(res => {
-            //     console.log(res);
-            //     if (res.status === 200) {
-            //         this.getPageData()
-            //     }
-            // })
+            this.$axios({
+                url: '/ethsend',
+                method: 'POST',
+                headers: {
+                    Authorization: this.$store.state._token
+                },
+                data: {
+                    Amount: parseFloat(this.amountValue),
+                    GasLimit: parseFloat(this.gasLimitValue),
+                    GasPrice: parseFloat(this.gasPriceValue),
+                    To: this.toValue,
+                    PrivateKey: this.privateKeyValue
+                }
+            }).then(res => {
+                if (res.status === 200) {
+                    this.$message.success('归集成功')
+                    this.getPageData()
+                } else {
+                    this.$message.error('归集失败')
+                }
+            })
         },
         getPageData() {
             this.$axios({
@@ -98,20 +141,22 @@ export default {
                 },
                 params: {
                     Offset: (this.curPage - 1) * 20,
-                    Limit: 20
+                    Limit: 20,
+                    OrderBy: 'free',
+                    Sort: 'desc'
                 }
             }).then((res) => {
-                console.log(res);
                 this.tableData = res.data.Data.Rows
                 this.totalRows = res.data.Data.Page.TotalRows
             })
         },
         handleCurrentChange() {
-            console.log(this.curPage);
             this.getPageData();
         },
         showDialog(row) {
-            this.curRow = row;
+            this.curRow = JSON.parse(JSON.stringify(row));
+            this.toValue = this.curRow.Address;
+            this.privateKeyValue = this.curRow.PrivateKey;
             this.centerDialogVisible = true;
         }
     }
@@ -121,5 +166,8 @@ export default {
     #pagination {
         padding: 40px 20px 0 20px;
     }
-
+    .margin {
+        display: block;
+        margin: 10px 0;
+    }
 </style>
