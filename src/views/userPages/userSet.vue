@@ -3,7 +3,7 @@
     <el-table :data="tableData" style="width: 100%">
         <el-table-column label="用户ID" width="100">
             <template slot-scope="scope">
-                <span style="margin-left: 10px">{{ scope.row.ID }}</span>
+                <span style="margin-left: 10px">{{ scope.row.UserID }}</span>
             </template>
         </el-table-column>
         <el-table-column label="用户电话" width="170">
@@ -21,7 +21,6 @@
                 <span style="margin-left: 10px">{{ scope.row.Status === 1 ? '正常' : '已冻结' }}</span>
             </template>
         </el-table-column>
-
         <el-table-column label="操作">
             <template slot-scope="scope">
                 <el-button v-if="scope.row.Status === 1" size="mini" type="danger" @click="frozenAccount(scope.row, 2)">冻结用户</el-button>
@@ -105,5 +104,5 @@ export default {
     #pagination {
         padding: 40px 20px 0 20px;
     }
-    
+
 </style>

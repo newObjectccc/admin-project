@@ -1,7 +1,7 @@
 <template>
 <div class="">
     <div class="wrap">
-        <el-input class="margin-right" v-model="userID" placeholder="请输入用户ID"></el-input>
+        <el-input class="margin-right" v-model="userPhone" placeholder="请输入用户手机号码"></el-input>
         <el-button size="small" type="primary" @click="searchAssets">查询用户</el-button>
     </div>
 
@@ -103,7 +103,7 @@
 export default {
     data() {
         return {
-            userID: '',
+            userPhone: '',
             usdtTableData: [],
             ectTableData: [],
             centerDialogVisible: false,
@@ -121,7 +121,7 @@ export default {
                     Authorization: this.$store.state._token
                 },
                 params: {
-                    UserID: this.userID
+                    Phone: this.userPhone
                 }
             }).then((res) => {
                 console.log(res);
