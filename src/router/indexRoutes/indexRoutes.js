@@ -31,6 +31,12 @@ export const indexRoutes = [
                 name: 'notionalPooling',
                 component: () => import('@/views/indexPages/notionalPooling.vue'),
                 meta: { title: '归集设置', class: '' },
+            },
+            {
+                path: '/log',
+                name: 'log',
+                component: () => import('@/views/indexPages/log.vue'),
+                meta: { title: '查看日志', class: '' },
             }
         ]
     }

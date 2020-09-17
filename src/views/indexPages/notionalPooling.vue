@@ -90,7 +90,7 @@
 
 <script>
 export default {
-    name: 'userSet',
+    name: 'notionalPooling',
     data() {
         return {
             tableData: [],
