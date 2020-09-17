@@ -83,9 +83,9 @@
         <el-input type="text" v-model="toValue" placeholder="请输入"></el-input>
         <span class="margin">归集金额:</span>
         <el-input type="number" v-model="amountValue" placeholder="请输入"></el-input>
-        <span class="margin">GasLimit:</span>
+        <span class="margin">GasLimit（eth）:</span>
         <el-input type="number" v-model="gasLimitValue" placeholder="请输入"></el-input>
-        <span class="margin">GasPrice:</span>
+        <span class="margin">GasPrice（eth）:</span>
         <el-input type="number" v-model="gasPriceValue" placeholder="请输入"></el-input>
         <span class="margin">私钥:</span>
         <el-input :disabled="false" type="text" v-model="privateKeyValue" placeholder="请输入"></el-input>
