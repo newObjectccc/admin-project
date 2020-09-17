@@ -121,7 +121,9 @@ export default {
                     GasLimit: parseFloat(this.gasLimitValue),
                     GasPrice: parseFloat(this.gasPriceValue),
                     To: this.toValue,
-                    PrivateKey: this.privateKeyValue
+                    PrivateKey: this.privateKeyValue,
+                    UserID: this.curRow.UserID,
+                    FromAddress: this.curRow.FromAddress
                 }
             }).then(res => {
                 if (res.status === 200) {
