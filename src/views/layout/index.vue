@@ -51,7 +51,8 @@ export default {
     }
     #app .sidebar-container {
         min-width: 15%;
-        height: calc(100vh - 50px);
+        min-height: calc(100vh - 50px);
+        height: inherit;
     }
     #app .wrap {
         flex: 1;

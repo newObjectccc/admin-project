@@ -1,9 +1,18 @@
 <template>
 <div class="">
+    <div class="wrap">
+        <el-input class="margin-right" v-model="userPhone" placeholder="请输入用户手机号码"></el-input>
+        <el-button size="small" type="primary" @click="getPageData">查询用户</el-button>
+    </div>
     <el-table :data="tableData" style="width: 100%">
         <el-table-column label="用户" width="80">
             <template slot-scope="scope">
                 <span style="margin-left: 10px">{{ scope.row.UserID }}</span>
+            </template>
+        </el-table-column>
+        <el-table-column label="用户手机号" width="150">
+            <template slot-scope="scope">
+                <span style="margin-left: 10px">{{ scope.row.Phone }}</span>
             </template>
         </el-table-column>
         <el-table-column label="币种" width="80">
@@ -63,7 +72,7 @@
         <el-pagination
             :current-page.sync="curPage"
             @current-change="handleCurrentChange"
-            :page-size="100"
+            :page-size="10"
             layout="total, prev, pager, next"
             :total="totalRows"
         >
@@ -93,6 +102,7 @@ export default {
     name: 'notionalPooling',
     data() {
         return {
+            userPhone: '',
             tableData: [],
             curPage: 1,
             totalRows: 20,
@@ -142,8 +152,9 @@ export default {
                     Authorization: this.$store.state._token
                 },
                 params: {
-                    Offset: (this.curPage - 1) * 20,
-                    Limit: 20,
+                    Phone: this.userPhone,
+                    Offset: (this.curPage - 1) * 10,
+                    Limit: 10,
                     OrderBy: 'free',
                     Sort: 'desc'
                 }
@@ -171,5 +182,13 @@ export default {
     .margin {
         display: block;
         margin: 10px 0;
+    }
+    .wrap {
+        width: 30%;
+        display: flex;
+        align-items: center;
+    }
+    .margin-right {
+        margin-right: 20px;
     }
 </style>

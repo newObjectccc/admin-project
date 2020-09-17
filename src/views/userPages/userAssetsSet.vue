@@ -6,9 +6,9 @@
     </div>
 
     <template v-if="usdtTableData !== []">
-        <div class="table-title">
+        <!-- <div class="table-title">
             USDT资产
-        </div>
+        </div> -->
         <el-table :data="usdtTableData" style="width: 100%">
             <el-table-column label="用户ID" width="100">
                 <template slot-scope="scope">
@@ -35,7 +35,6 @@
                     <span style="margin-left: 10px">{{ scope.row.Status === 1 ? '正常' : '已冻结' }}</span>
                 </template>
             </el-table-column>
-
             <el-table-column label="操作">
                 <template slot-scope="scope">
                     <el-button v-if="scope.row.Status === 1" size="mini" type="danger" @click="handleAssets(scope.row, 1)">冻结资产</el-button>
@@ -48,7 +47,7 @@
         </el-table>
     </template>
 
-    <template v-if="ectTableData !== []">
+    <!-- <template v-if="ectTableData !== []">
         <div class="table-title">
             ECT资产
         </div>
@@ -88,7 +87,17 @@
                 </template>
             </el-table-column>
         </el-table>
-    </template>
+    </template> -->
+    <div id="pagination" class="block">
+        <el-pagination
+            :current-page.sync="curPage"
+            @current-change="handleCurrentChange"
+            :page-size="10"
+            layout="total, prev, pager, next"
+            :total="totalRows"
+        >
+        </el-pagination>
+    </div>
     <el-dialog title="修改数值" :visible.sync="centerDialogVisible" width="30%" center>
         <el-input class="margin" type="number" v-model="fixValue" placeholder="请输入"></el-input>
         <span slot="footer" class="dialog-footer">
@@ -109,10 +118,19 @@ export default {
             centerDialogVisible: false,
             curType: 0,
             curData: {},
-            fixValue: 0
+            fixValue: 0,
+            curPage: 1,
+            totalRows: 20
         }
     },
+    created() {
+        this.searchAssets()
+    },
     methods: {
+        handleCurrentChange() {
+            console.log(this.curPage);
+            this.searchAssets();
+        },
         searchAssets() {
             this.$axios({
                 url: '/userassets',
@@ -121,19 +139,23 @@ export default {
                     Authorization: this.$store.state._token
                 },
                 params: {
+                    Offset: (this.curPage - 1) * 10,
+                    Limit: 10,
                     Phone: this.userPhone
                 }
             }).then((res) => {
                 console.log(res);
                 if (res.status === 200) {
-                    res.data.Data.map(item => {
-                        if (item.Name === 'ECT') {
-                            this.ectTableData = [item]
-                        } else {
-                            // item.Name === 'USDT'
-                            this.usdtTableData = [item]
-                        }
-                    })
+                    this.usdtTableData = res.data.Data.Rows
+                    this.totalRows = res.data.Data.Page.TotalRows
+                    // res.data.Data.map(item => {
+                    //     if (item.Name === 'ECT') {
+                    //         this.ectTableData = [item]
+                    //     } else {
+                    //         // item.Name === 'USDT'
+                    //         this.usdtTableData = [item]
+                    //     }
+                    // })
                 } else {
                     this.$message.error('操作失败！')
                 }

@@ -65,7 +65,7 @@
         <el-pagination
             :current-page.sync="curPage"
             @current-change="handleCurrentChange"
-            :page-size="100"
+            :page-size="10"
             layout="total, prev, pager, next"
             :total="totalRows"
         >
@@ -103,8 +103,8 @@ export default {
                     Authorization: this.$store.state._token
                 },
                 params: {
-                    Offset: (this.curPage - 1) * 20,
-                    Limit: 20,
+                    Offset: (this.curPage - 1) * 10,
+                    Limit: 10,
                     Type: this.typeValue,
                     FromCoin: this.fromCoinValue,
                     ToCoin: this.toCoinValue,
