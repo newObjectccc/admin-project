@@ -1,6 +1,7 @@
 <template>
 <div class="">
     <div class="btn-wrap">
+        <el-input class="margin-right" v-model="userValue" placeholder="输入userID进行筛选(用户ID)"></el-input>
         <el-input class="margin-right" v-model="typeValue" placeholder="输入type进行筛选(类型)"></el-input>
         <el-input class="margin-right" v-model="fromCoinValue" placeholder="输入FromCoin进行筛选(转入币种)"></el-input>
         <el-input class="margin-right" v-model="toCoinValue" placeholder="输入ToCoin进行筛选(到账币种)"></el-input>
@@ -79,6 +80,7 @@ export default {
     name: 'log',
     data() {
         return {
+            userValue: '',
             typeValue: '',
             fromCoinValue: '',
             toCoinValue: '',
@@ -107,7 +109,8 @@ export default {
                     FromCoin: this.fromCoinValue,
                     ToCoin: this.toCoinValue,
                     FromAddress: this.fromAddressValue,
-                    ToAddress: this.toAddressValue
+                    ToAddress: this.toAddressValue,
+                    UserID: this.userValue
                 }
             }).then((res) => {
                 console.log(res);
