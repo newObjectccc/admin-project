@@ -15,6 +15,11 @@
                 <span style="margin-left: 10px">{{ scope.row.UserID }}</span>
             </template>
         </el-table-column>
+        <el-table-column label="用户手机号" width="150">
+            <template slot-scope="scope">
+                <span style="margin-left: 10px">{{ scope.row.Phone }}</span>
+            </template>
+        </el-table-column>
         <el-table-column label="转入币种" width="100">
             <template slot-scope="scope">
                 <span style="margin-left: 10px">{{ scope.row.FromCoin }}</span>
