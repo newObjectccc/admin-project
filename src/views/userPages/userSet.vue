@@ -1,5 +1,7 @@
 <template>
 <div class="">
+    <el-input class="margin-right" v-model="userIdValue" placeholder="输入UserID进行筛选(用户ID)"></el-input>
+    <el-button size="small" type="primary" @click="getPageData">筛选查询</el-button>
     <el-table :data="tableData" style="width: 100%">
         <el-table-column label="用户ID" width="100">
             <template slot-scope="scope">
@@ -47,6 +49,7 @@ export default {
     name: 'userSet',
     data() {
         return {
+            userIdValue: '',
             tableData: [],
             curPage: 1,
             totalRows: 20
@@ -65,7 +68,8 @@ export default {
                 },
                 params: {
                     Offset: (this.curPage - 1) * 20,
-                    Limit: 20
+                    Limit: 20,
+                    UserID: this.userIdValue
                 }
             }).then((res) => {
                 console.log(res);
