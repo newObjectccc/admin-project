@@ -108,5 +108,8 @@ export default {
     #pagination {
         padding: 40px 20px 0 20px;
     }
-
+    .margin-right {
+        width: 15%;
+        margin-right: 20px;
+    }
 </style>
