@@ -15,6 +15,11 @@
                     <span style="margin-left: 10px">{{ scope.row.UserID }}</span>
                 </template>
             </el-table-column>
+            <el-table-column label="币种" width="100">
+                <template slot-scope="scope">
+                    <span style="margin-left: 10px">{{ scope.row.Name }}</span>
+                </template>
+            </el-table-column>
             <el-table-column label="资产" width="240">
                 <template slot-scope="scope">
                     <span style="margin-left: 10px">{{ scope.row.Money }}</span>
