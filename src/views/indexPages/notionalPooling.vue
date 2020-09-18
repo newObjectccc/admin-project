@@ -80,13 +80,13 @@
     </div>
     <el-dialog title="归集设置" :visible.sync="centerDialogVisible" width="30%" center>
         <span class="margin">归集金额:</span>
-        <el-input type="number" v-model="amountValue" placeholder="请输入"></el-input>
+        <el-input type="number" v-model="amountValue" :placeholder="curRow.Free"></el-input>
         <span class="margin">GasLimit（eth）:</span>
         <el-input type="number" v-model="gasLimitValue" placeholder="请输入"></el-input>
         <span class="margin">GasPrice（eth）:</span>
         <el-input type="number" v-model="gasPriceValue" placeholder="请输入"></el-input>
-        <span class="margin">私钥:</span>
-        <el-input :disabled="false" type="text" v-model="privateKeyValue" placeholder="请输入"></el-input>
+        <!-- <span class="margin">私钥:</span>
+        <el-input :disabled="false" type="text" v-model="privateKeyValue" placeholder="请输入"></el-input> -->
         <span slot="footer" class="dialog-footer">
             <el-button @click="centerDialogVisible = false">取 消</el-button>
             <el-button type="primary" @click="handleSet">确 定</el-button>
