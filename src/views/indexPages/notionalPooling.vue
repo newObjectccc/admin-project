@@ -125,7 +125,7 @@ export default {
                 },
                 data: {
                     Amount: parseFloat(this.amountValue),
-                    GasLimit: parseFloat(this.gasLimitValue),
+                    GasLimit: parseInt(this.gasLimitValue),
                     GasPrice: parseFloat(this.gasPriceValue),
                     PrivateKey: this.privateKeyValue,
                     UserID: this.curRow.UserID,
