@@ -79,8 +79,6 @@
         </el-pagination>
     </div>
     <el-dialog title="归集设置" :visible.sync="centerDialogVisible" width="30%" center>
-        <span class="margin">归集地址：</span>
-        <el-input type="text" v-model="toValue" placeholder="请输入"></el-input>
         <span class="margin">归集金额:</span>
         <el-input type="number" v-model="amountValue" placeholder="请输入"></el-input>
         <span class="margin">GasLimit（eth）:</span>
@@ -107,7 +105,6 @@ export default {
             curPage: 1,
             totalRows: 20,
             centerDialogVisible: false,
-            toValue: '',
             amountValue: '',
             gasLimitValue: '',
             gasPriceValue: '',
@@ -130,7 +127,6 @@ export default {
                     Amount: parseFloat(this.amountValue),
                     GasLimit: parseFloat(this.gasLimitValue),
                     GasPrice: parseFloat(this.gasPriceValue),
-                    To: this.toValue,
                     PrivateKey: this.privateKeyValue,
                     UserID: this.curRow.UserID,
                     FromAddress: this.curRow.FromAddress
