@@ -81,7 +81,7 @@
     <el-dialog title="归集设置" :visible.sync="centerDialogVisible" width="30%" center>
         <span class="margin">归集金额:</span>
         <el-input type="number" v-model="amountValue" :placeholder="curRow.Free"></el-input>
-        <span class="margin">GasLimit（eth）:</span>
+        <span class="margin">GasLimit:</span>
         <el-input type="number" v-model="gasLimitValue" placeholder="请输入"></el-input>
         <span class="margin">GasPrice（eth）:</span>
         <el-input type="number" v-model="gasPriceValue" placeholder="请输入"></el-input>
