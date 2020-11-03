@@ -18,6 +18,11 @@
                 <span style="margin-left: 10px">{{ scope.row.Email }}</span>
             </template>
         </el-table-column>
+        <el-table-column label="邀请人" width="170">
+            <template slot-scope="scope">
+                <span style="margin-left: 10px">{{ scope.row.Inviter }}</span>
+            </template>
+        </el-table-column>
         <el-table-column label="状态" width="100">
             <template slot-scope="scope">
                 <span style="margin-left: 10px">{{ scope.row.Status === 1 ? '正常' : '已冻结' }}</span>
