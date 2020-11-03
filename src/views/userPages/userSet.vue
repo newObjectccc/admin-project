@@ -137,6 +137,7 @@ export default {
                     this.getPageData()
                 }
             })
+            this.inviterValue = ''
             this.centerDialogVisible = false
         },
         toggleDialogStatus(row) {
