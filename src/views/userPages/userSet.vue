@@ -18,9 +18,10 @@
                 <span style="margin-left: 10px">{{ scope.row.Email }}</span>
             </template>
         </el-table-column>
-        <el-table-column label="邀请人" width="170">
+        <el-table-column label="邀请人" width="250">
             <template slot-scope="scope">
                 <span style="margin-left: 10px">{{ scope.row.Inviter }}</span>
+                <span class="change-btn" v-if="scope.row.Inviter" @click="toggleDialogStatus(scope.row)">修改</span>
             </template>
         </el-table-column>
         <el-table-column label="状态" width="100">
@@ -45,7 +46,16 @@
         >
         </el-pagination>
     </div>
-
+    <el-dialog title="请输入邀请码" :visible.sync="centerDialogVisible" width="30%" center>
+        <span class="margin">邀请码:</span>
+        <el-input type="number" v-model="inviterValue"></el-input>
+        <!-- <span class="margin">私钥:</span>
+        <el-input :disabled="false" type="text" v-model="privateKeyValue" placeholder="请输入"></el-input> -->
+        <span slot="footer" class="dialog-footer">
+            <el-button @click="centerDialogVisible = false">取 消</el-button>
+            <el-button type="primary" @click="changeInviter">确 定</el-button>
+        </span>
+    </el-dialog>
 </div>
 </template>
 
@@ -57,7 +67,9 @@ export default {
             userPhone: '',
             tableData: [],
             curPage: 1,
-            totalRows: 20
+            totalRows: 20,
+            inviterValue: '',
+            centerDialogVisible: false
         }
     },
     created() {
@@ -105,6 +117,31 @@ export default {
                     this.getPageData()
                 }
             })
+        },
+        changeInviter() {
+            this.$axios({
+                url: '/userstatus',
+                method: 'PUT',
+                headers: {
+                    'Authorization': this.$store.state._token,
+                    'Content-Type': 'application/json'
+                },
+                data: JSON.stringify({
+                    Status: this.curRow.Status,
+                    UserID: this.curRow.UserID,
+                    Inviter: this.inviterValue
+                })
+            }).then(res => {
+                console.log(res);
+                if (res.status === 200) {
+                    this.getPageData()
+                }
+            })
+            this.centerDialogVisible = false
+        },
+        toggleDialogStatus(row) {
+            this.curRow = JSON.parse(JSON.stringify(row))
+            this.centerDialogVisible = true
         }
     }
 }
@@ -116,5 +153,11 @@ export default {
     .margin-right {
         width: 15%;
         margin-right: 20px;
+    }
+    .change-btn {
+        display: inline-block;
+        margin-left: 15px;
+        color: #409EFF;
+        cursor: pointer;
     }
 </style>
