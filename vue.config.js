@@ -15,6 +15,7 @@
 
 module.exports = {
     // publicPath: '/adminweb/',
+	lintOnSave: false,
     devServer: {
         host: "0.0.0.0",
         port: 8080, // 端口号
