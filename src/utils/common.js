@@ -18,3 +18,4 @@ function formatTime(e) {
 module.exports = {
     formatTime
 }
+
