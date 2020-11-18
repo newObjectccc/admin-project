@@ -20,7 +20,7 @@
         </el-table-column> -->
         <el-table-column label="注册时间" width="200">
             <template slot-scope="scope">
-                <span style="margin-left: 10px">{{ formatTime(scope.row.CreateAt) }}</span>
+                <span style="margin-left: 10px">{{ $common.formatTime(scope.row.CreateAt) }}</span>
             </template>
         </el-table-column>
         <el-table-column label="邀请人" width="250">
@@ -69,6 +69,7 @@
 <script>
 
 
+
 export default {
     name: 'userSet',
     data() {
@@ -85,19 +86,6 @@ export default {
         this.getPageData()
     },
     methods: {
-		 formatTime(e) {
-			let date = new Date(e * 1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
-			let Y = date.getFullYear() + '-';
-			let M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
-			let D = date.getDate() + ' ';
-			let h = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':';
-			let m = (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()) + ':';
-			let s = date.getSeconds();
-			if (s.toString().length === 1) {
-				s = '0'+s
-			}
-			return Y+M+D+h+m+s;
-		},
 		
         getPageData() {
             this.$axios({
@@ -166,7 +154,8 @@ export default {
         toggleDialogStatus(row) {
             this.curRow = JSON.parse(JSON.stringify(row))
             this.centerDialogVisible = true
-        }
+        },
+	
     }
 }
 </script>

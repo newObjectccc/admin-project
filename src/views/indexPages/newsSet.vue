@@ -22,7 +22,7 @@
         </el-table-column>
         <el-table-column label="创建时间" width="220">
             <template slot-scope="scope">
-                <span style="margin-left: 10px">{{ fmtTime(scope.row.CreateAt) }}</span>
+                <span style="margin-left: 10px">{{ $common.formatTime(scope.row.CreateAt) }}</span>
             </template>
         </el-table-column>
         <el-table-column label="发布状态" width="120">
@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import { formatTime } from '@/utils/common.js'
+
 export default {
     data() {
         return {
@@ -67,9 +67,9 @@ export default {
         this.getNewsList()
     },
     methods: {
-        fmtTime(e) {
-            return formatTime(e)
-        },
+        // fmtTime(e) {
+        //     return formatTime(e)
+        // },
         handleCurrentChange() {
             this.getNewsList()
         },
